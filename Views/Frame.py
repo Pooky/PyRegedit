@@ -67,9 +67,8 @@ class EditFrame(wx.Frame):
 		self.btn_save = wx.Button(self, wx.ID_ANY, "Save")
 		self.btn_cancel = wx.Button(self, wx.ID_ANY, "Cancel")
 
+		self.key_name.Enable(False)
 		self.key_value.SetValue(hex(2500))
-
-		self.Bind(wx.EVT_BUTTON, self.Close, self.btn_cancel)
 
 		self.__set_properties()
 		self.__do_layout()
@@ -100,5 +99,3 @@ class EditFrame(wx.Frame):
 		self.Layout()
 		# end wxGlade
 
-	def Close(self, event):
-		self.Destroy()

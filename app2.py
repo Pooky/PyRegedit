@@ -26,6 +26,7 @@ class Controller:
 		self.initMenuBar()
 
 		self.hivex = None
+		self.ef = None
 		self.openHive("NTUSER.DAT_CHANGED")
 
 		# Init handle for TreeView
@@ -34,7 +35,7 @@ class Controller:
 
 		# Init handle for ListCtrl
 		self.lc = self.frame.lc
-		self.frame.Bind(wx.EVT_LIST_COL_CLICK, self.OnColClick, self.lc)
+		self.frame.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnClick, self.lc)
 
 		self.frame.Show()
 		self.app.MainLoop()
@@ -60,14 +61,59 @@ class Controller:
 		self.setStatusBarText("Hive opened: " + path)
 		
 	'''
-		Kliknutí na sloupec
+		Click on selected key -> value
 	'''
-	def OnColClick(self, event):
-		print "clicked"
-		#frame = EditFrame()
-		#frame.Show()
+	def OnClick(self, event):
 		
+		if self.ef != None: 
+			return False
+			
+		item = event.GetItem()
+		node = item.GetData() # parent node of this key
+		keyName = item.GetText() # name of key
+
+		value = self.hivex.getValue(node, keyName)
+
+		# Create frame for editing value
+		self.ef = EditFrame()
+
+		self.ef.Bind(wx.EVT_BUTTON, self.OnSaveClick, self.ef.btn_save)
+		self.ef.Bind(wx.EVT_BUTTON, self.OnCancelClick, self.ef.btn_cancel)
+
+		self.ef.key_name.SetValue(keyName)
+		self.ef.key_value.SetValue(value[0])
+
+		self.ef.Show()
+
+		# save values for saving
+		self.editingValue = { "key" : keyName, "t": value[1], "value" : value[0] }
+		self.editingNode = node
 		
+	'''
+		Saving value back to key
+	'''
+	def OnSaveClick(self, event):
+
+		value = self.editingValue
+		new_value = self.ef.key_value.GetValue()
+		
+		# reconvert
+		value["value"] = self.hivex.getIntepretationBack(value["t"], new_value)
+		print "saving", value
+		self.hivex.setValue(self.editingNode, value)
+
+		self.reloadKeyView(self.editingNode)
+		self.ef.Destroy()
+		self.ef = None
+		self.editingNode = None
+		self.editingValue = None
+
+		self.setStatusBarText("Key was saved")
+
+	def OnCancelClick(self, event):
+		self.ef.Destroy()
+		self.ef = None
+	
 	'''
 		Menu Bar
 	'''
@@ -130,7 +176,7 @@ class Controller:
 		
 	def menuDeleteNode(self, event):
 
-		dlg = wx.MessageDialog(None, 'Are you sure to delete this node? And all his subnodes!', 'Are you shure?', 
+		dlg = wx.MessageDialog(None, 'Are you sure to delete this node? And all his subnodes!', 'Are you sure?', 
             wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
 		if dlg.ShowModal() == wx.ID_YES:
 
@@ -204,13 +250,23 @@ class Controller:
 	def OnActivatedItem(self, event):
 
 		self.setStatusBarText("Item Activated")
-		self.lc.DeleteAllItems()
 		
 		item = event.GetItem()
 		if not item.IsOk():
 			item = self.treeView.GetSelection()
 		
 		keyId = self.treeView.GetItemData(item).GetData()[0]
+		if not keyId:
+			return False
+
+		self.reloadKeyView(keyId)
+			
+	'''
+		Reload view of values
+	'''
+	def reloadKeyView(self, keyId):
+
+		self.lc.DeleteAllItems()
 		rows = self.hivex.getValues(keyId)
 		
 		for i, val in enumerate(rows):
@@ -220,7 +276,6 @@ class Controller:
 			self.lc.SetStringItem(index, 2, val[2])
 
 			self.lc.SetItemData(index, keyId)
-		
 		
 
 controller = Controller()

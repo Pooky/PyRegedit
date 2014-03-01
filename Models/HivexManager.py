@@ -71,7 +71,19 @@ class HivexManager:
 			#print "\t %s --> %s" % (keyName, value2)
 
 		return res
-	
+
+	def getValue(self, node, keyName):
+		
+		val = self.h.node_get_value(node, keyName)
+		valType = self.h.value_type(val)[0]
+
+		#print valType, val
+		return [self.getIntepretation(valType, val), valType]
+		
+	def setValue(self, node, value):
+
+		return self.h.node_set_value(node, value)
+		
 	def addChild(self, key, new_node):
 		
 		return self.h.node_add_child(key, new_node)
@@ -85,7 +97,7 @@ class HivexManager:
 		return self.h.close()
 
 	'''
-		Display format for others
+		Display format value -> string
 	'''
 	def getIntepretation(self, val_type, val):
 
@@ -107,3 +119,15 @@ class HivexManager:
 			res = self.h.value_value(val)[1].decode('utf-16be').encode('utf-8') # no nevím
 		
 		return str(res)
+
+	'''
+		Return format for save string -> value
+	'''
+	def getIntepretationBack(self, val_type, val):
+
+		if val_type == Type.STRING:
+			res = val.encode('utf-16le')
+		else:
+			res = val
+		
+		return res
