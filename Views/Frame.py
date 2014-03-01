@@ -60,7 +60,7 @@ class EditFrame(wx.Frame):
 		# begin wxGlade: EditFrame.__init__
 		
 		wx.Frame.__init__(self, None)
-		
+			
 		self.label_1 = wx.StaticText(self, wx.ID_ANY, "Key name:")
 		self.key_name = wx.TextCtrl(self, wx.ID_ANY, "")
 		self.key_value = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_MULTILINE)

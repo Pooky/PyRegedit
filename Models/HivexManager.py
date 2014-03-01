@@ -49,19 +49,19 @@ class HivexManager:
 
 		return keys		
 				
-	def getValues(self, key):
+	def getValues(self, node):
 
 		typ = Type()
 		
 		res = []
 	
-		values = self.h.node_values(key)
+		values = self.h.node_values(node)
 		for value in values:
 			
 			keyName = self.h.value_key(value)
 
 			#print h.node_name(value)
-			val = self.h.node_get_value(key, keyName)
+			val = self.h.node_get_value(node, keyName)
 			valType = self.h.value_type(val)[0]
 
 			value2 = self.getIntepretation(valType, val)
@@ -70,8 +70,38 @@ class HivexManager:
 			res.append([keyName, stringType, value2])
 			#print "\t %s --> %s" % (keyName, value2)
 
+		res = sorted(res, key=lambda x: x[0])
 		return res
+	'''
+		Delete one key
+		- we have to get all and exclude only the one and then save it again.
+	'''
+	def deleteKey(self, node, key):
 
+		values = self.h.node_values(node)
+		new_values = []
+
+		for value in values:
+			keyName = self.h.value_key(value)
+
+			if(keyName == key):
+				continue
+
+			val = self.h.node_get_value(node, keyName)
+			valType = self.h.value_type(val)[0]
+
+			value2 = self.h.value_value(val)[1]
+			
+			valObject = { "key": keyName, "t": int(valType), "value": value2 }
+			new_values.append(valObject)
+
+		print node, new_values
+		self.h.node_set_values(node, new_values)
+	
+	def saveChanges(self, path):
+		self.h.commit(path)
+		
+		
 	def getValue(self, node, keyName):
 		
 		val = self.h.node_get_value(node, keyName)
@@ -91,7 +121,10 @@ class HivexManager:
 	def removeChild(self, key):
 
 		return self.h.node_delete_child(key)
-
+		
+	def getRoot(self):
+		return self.h.root()
+	
 	def close(self):
 
 		return self.h.close()

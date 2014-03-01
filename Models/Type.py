@@ -8,6 +8,7 @@ class Type:
 	INTEGER_BIG_ENDIAN = 5 # REG_DWORD_BIG_ENDIAN
 	LINK = 6 # REG_LINK
 	LIST_STRING = 7 # REG_MULTI_SZ
+	TYPES = ["REG_NONE", "REG_SZ", "REG_EXPAND_SZ", "REG_BINARY", "REG_DWORD", "REG_DWORD_BIG_ENDIAN", "REG_LINK", "REG_MULTI_SZ"]
 
 	def getStringType(self, x):
 
@@ -32,5 +33,5 @@ class Type:
 
 		return res
 
-		
+		 
 	

@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
 
+import shutil
 import sys
 import os
 import wx
@@ -8,11 +9,12 @@ import wx
 sys.path.append(os.path.abspath("Models"))
 sys.path.append(os.path.abspath("Views"))
 
-from Models import File
-from Models import HivexManager
+from Models import *
 from Views import *
 
 class Controller:
+
+	title = "PyRegedit"
 	
 	def initApp(self):
 
@@ -26,7 +28,9 @@ class Controller:
 		self.initMenuBar()
 
 		self.hivex = None
+		self.editing = False
 		self.ef = None
+		self.firstSave = True
 		self.openHive("NTUSER.DAT_CHANGED")
 
 		# Init handle for TreeView
@@ -55,51 +59,67 @@ class Controller:
 			 
 		self.hivex = HivexManager(self.hive);
 		self.setStatusBarText("Hive opened: " + path)
+
+		self.firstSave = True
 		
 	'''
 		Click on selected key -> value
 	'''
 	def OnClick(self, event):
 		
-		if self.ef != None: 
-			return False
-			
+		if self.editing == True: 
+			return False # existuje už dialog?
+
 		item = event.GetItem()
 		node = item.GetData() # parent node of this key
 		keyName = item.GetText() # name of key
 
 		value = self.hivex.getValue(node, keyName)
 
-		self.initEditFrame(keyName, value[0]) 
+		self.initEditFrame(keyName, value[0]) # inicializace editačního dialogu
+		
+		vType = Type.TYPES[value[1]] # hodnota typu
+		self.ef.rtype.SetValue(vType)
 		
 		# save values for saving
-		self.editingValue = { "key" : keyName, "t": value[1], "value" : value[0] }
+		#self.editingValue = { "key" : keyName, "t": value[1], "value" : value[0] }
 		self.editingNode = node
+
+		self.editing = True
 		
 	'''
 		Saving value back to key
 	'''
 	def OnSaveClick(self, event):
 
-		value = self.editingValue
+		value = {}
 		new_value = self.ef.key_value.GetValue()
 		
 		# reconvert
+		value["key"] = self.ef.key_name.GetValue()
+		value["t"] = [i for i, x in enumerate(Type.TYPES) if x == self.ef.rtype.GetValue()][0]
 		value["value"] = self.hivex.getIntepretationBack(value["t"], new_value)
-		print "saving", value
+		
+		#print "saving", value
 		self.hivex.setValue(self.editingNode, value)
 
 		self.reloadKeyView(self.editingNode)
-		self.ef.Destroy()
-		self.ef = None
+		self.ef.Close()
+		
+		self.editing = False
 		self.editingNode = None
-		self.editingValue = None
+		self.ef = None
+		#self.editingValue = None
 
 		self.setStatusBarText("Key was saved")
+		self.isSaved(False)
 
 	def OnCancelClick(self, event):
-		self.ef.Destroy()
+
+		self.ef.Close()
 		self.ef = None
+		self.editing = False
+		
 	
 	'''
 		Menu Bar
@@ -113,8 +133,10 @@ class Controller:
 		self.frame.Bind(wx.EVT_MENU, self.menuAddNode, id=self.menuBar.ID_ADD_NODE)
 		self.frame.Bind(wx.EVT_MENU, self.menuDeleteNode, id=self.menuBar.ID_DELETE_NODE)
 		self.frame.Bind(wx.EVT_MENU, self.menuAddKey, id=self.menuBar.ID_ADD_KEY)
+		self.frame.Bind(wx.EVT_MENU, self.menuRemoveKey, id=self.menuBar.ID_REMOVE_KEY)
 
 	def menuOpen(self, event):
+
 		
 		self.dirname = ""
 			
@@ -130,28 +152,79 @@ class Controller:
 			self.reloadTreeView()
 
 		dlg.Destroy()
-		
+	'''
+		Reload tree view of nodes
+	'''
 	def menuReload(self, event):
+		
 		self.reloadTreeView()
 
+	'''
+		Add new key and his value
+	'''
 	def menuAddKey(self, event):
 
+		print "add key"
+		if self.editing == True: 
+			return False # existuje už dialog?
+					
 		item = self.treeView.GetSelection()
 		keyId = self.treeView.GetItemData(item).GetData()[0]
 		if not keyId:
-			return False
+			keyId = self.hivex.getRoot()
 
+		self.initEditFrame() # inicializace editačního dialogu
+		self.ef.key_name.Enable(True)
+		self.ef.SetTitle("Add new key")
+
+		# save values for saving
+		#self.editingValue = { "key" : keyName, "t": value[1], "value" : value[0] }
 		
-		event.Skip()
+		self.editingNode = keyId
+		self.editing = True
+		self.isSaved(False)
 		
+		
+		#event.Skip()
+	'''
+		Delete actual key from list
+	'''
+	def menuRemoveKey(self, event):
+
+		itemNumber = self.lc.GetFocusedItem()
+		
+		item = self.lc.GetItem(itemNumber, 0)
+		node = item.GetData() # parent node of this key
+		keyName = item.GetText() # name of key
+
+		self.hivex.deleteKey(int(node), keyName)
+		self.reloadKeyView(node)
+
+		self.setStatusBarText(keyName + " - Key was deleted")
+		self.isSaved(False)
+		
+		
+	'''
+		Close hive and delete items in tree View
+	'''
 	def menuClose(self, event):
 		self.treeView.DeleteAllItems()
-		del self.hivex
 		self.hivex = None
-		
+	'''
+		Save changes to hive
+		- and create backup copy...
+	'''
 	def menuSave(self, event):
-		 #self.hivex.commit()
-		 event.Skip()
+			
+		if self.firstSave == True:
+			shutil.copyfile(self.full_path, self.full_path + ".backup" )
+			self.firstSave = False
+			
+		self.hivex.saveChanges(self.full_path)
+		self.setStatusBarText("Changes in hive was saved")
+		self.isSaved(True)
+
+		
 	'''
 		Add new node to hive
 	'''
@@ -169,6 +242,7 @@ class Controller:
 			self.treeView.AppendItem(item, new_node, data=wx.TreeItemData([newId, False])) 
 
 			self.setStatusBarText("Node was added")
+			self.isSaved(False)
 			
 		dlg.Destroy()
 		
@@ -185,6 +259,7 @@ class Controller:
 			self.treeView.Delete(item)
 
 			self.setStatusBarText("Node was deleted")
+			self.isSaved(False)
 
 	'''
 		Tree View
@@ -193,7 +268,7 @@ class Controller:
 
 		# Bind for collapse and uncollapse
 		self.treeView.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandItem)
-		self.treeView.Bind(wx.EVT_TREE_ITEM_COLLAPSING, self.OnCollapseItem)	
+		#self.treeView.Bind(wx.EVT_TREE_ITEM_COLLAPSING, self.OnCollapseItem)	
 		self.treeView.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnActivatedItem)
 
 		self.reloadTreeView()
@@ -239,23 +314,18 @@ class Controller:
 		
 		#print "data: %i, name: %" % (data, name)
 		
-	def OnCollapseItem(self, event):
-		print "collapse"
-
 	'''
 		Click on item and write his key -> values
 	'''
 	def OnActivatedItem(self, event):
 
-		self.setStatusBarText("Item Activated")
-		
 		item = event.GetItem()
 		if not item.IsOk():
 			item = self.treeView.GetSelection()
 		
 		keyId = self.treeView.GetItemData(item).GetData()[0]
 		if not keyId:
-			return False
+			keyId = self.hivex.getRoot()
 
 		self.reloadKeyView(keyId)
 			
@@ -275,18 +345,34 @@ class Controller:
 
 			self.lc.SetItemData(index, keyId)
 
-	def initEditFrame(self, keyName, keyValue):
+	'''
+		Init edit frame
+	'''
+	def initEditFrame(self, keyName = "", keyValue = ""):
 
 		# Create frame for editing value
 		self.ef = EditFrame()
 
+		for type in Type.TYPES:
+			self.ef.rtype.Append(type)
+
+		self.ef.rtype.SetValue(Type.TYPES[1])
+		
 		self.ef.Bind(wx.EVT_BUTTON, self.OnSaveClick, self.ef.btn_save)
 		self.ef.Bind(wx.EVT_BUTTON, self.OnCancelClick, self.ef.btn_cancel)
 
 		self.ef.key_name.SetValue(keyName)
 		self.ef.key_value.SetValue(keyValue)
 
-		self.ef.Show()	
+		self.ef.Show()
+
+	def isSaved(self, saved):
+
+		if saved == True:
+			self.frame.SetTitle(self.title + " - SAVED")
+		else:
+			self.frame.SetTitle(self.title + " - Modified *")
+			
 
 controller = Controller()
 controller.initApp() # Init app

@@ -10,7 +10,8 @@ class MenuBar(wx.MenuBar):
 	ID_ADD_NODE = 104
 	ID_DELETE_NODE = 105
 
-	ID_ADD_KEY = 106
+	ID_ADD_KEY = 156
+	ID_REMOVE_KEY = 160
 	
 	
 	def __init__(self, *args, **kwds):
@@ -33,8 +34,8 @@ class MenuBar(wx.MenuBar):
 		self.Append(self.Node, "Node")
 
 		self.Key = wx.Menu()
-		self.Key.Append(self.ID_ADD_NODE, "Add new key", "", wx.ITEM_NORMAL)
-		self.Key.Append(self.ID_DELETE_NODE, "Remove node", "", wx.ITEM_NORMAL)
+		self.Key.Append(self.ID_ADD_KEY, "Add new key", "", wx.ITEM_NORMAL)
+		self.Key.Append(self.ID_REMOVE_KEY, "Remove key", "", wx.ITEM_NORMAL)
 		self.Append(self.Key, "Key")
 		
 		self.About = wx.Menu()
