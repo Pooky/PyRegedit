@@ -1,0 +1,3 @@
+http://gitweb.samba.org/?p=samba.git;a=tree;f=source/lib/registry;h=21934b5f658009ff0383f6aed41b102013b5b046;hb=v4-0-stable.
+http://sentinelchicken.com/research/registry_format/
+http://www.beginningtoseethelight.org/ntsecurity/index.php
