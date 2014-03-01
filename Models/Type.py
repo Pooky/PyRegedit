@@ -25,12 +25,12 @@ class Type:
 			res = "REG_DWORD_BIG_ENDIAN"
 		elif x == self.LINK:
 			res = "REG_LINK"
-		elif x == self.LINK:
+		elif x == self.LIST_STRING:
 			res = "LIST_STRING"
 		else:
 			res = "Unknow"
 
 		return res
 	
-	
+		
 	

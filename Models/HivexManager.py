@@ -2,6 +2,7 @@
 # -*- coding: UTF-8 -*-
 
 import hivex
+import hashlib
 from Type import Type
 
 '''
@@ -13,7 +14,7 @@ class HivexManager:
 
 	def __init__(self, hive, debug = False):
 
-		self.h = hivex.Hivex(hive.path, write=True)
+		self.h = hivex.Hivex(hive.path, write=True, debug=debug)
 
 	'''
 		Vrácení prvního levelu root klíčů hive
@@ -63,12 +64,7 @@ class HivexManager:
 			val = self.h.node_get_value(key, keyName)
 			valType = self.h.value_type(val)[0]
 
-			if(valType == typ.STRING):
-				value2 = self.h.value_string(val)
-			else:
-				value2 = self.h.value_value(val)[1]
-				value2 = value2.decode('utf-16le').encode('utf-8')
-
+			value2 = self.getIntepretation(valType, val)
 			stringType = typ.getStringType(valType)
 
 			res.append([keyName, stringType, value2])
@@ -87,4 +83,27 @@ class HivexManager:
 	def close(self):
 
 		return self.h.close()
+
+	'''
+		Display format for others
+	'''
+	def getIntepretation(self, val_type, val):
+
+		if val_type == Type.STRING:
+			res = self.h.value_string(val)
+		elif val_type == Type.SYS_STRING:
+			res = self.h.value_string(val)
+		elif val_type == Type.BINARY:
+			res = hex(self.h.value_value(val)[1])
+		elif val_type == Type.INTEGER:
+			res = self.h.value_dword(val)
+		elif val_type == Type.INTEGER_BIG_ENDIAN:
+			res = self.h.value_value(val)[1].decode('utf-16be').encode('utf-8') # no nevím
+		elif val_type == Type.LINK:
+			res = self.h.value_string(val)
+		elif val_type == Type.LIST_STRING:
+			res = self.h.value_multiple_strings(val)
+		else:
+			res = self.h.value_value(val)[1].decode('utf-16be').encode('utf-8') # no nevím
 		
+		return str(res)

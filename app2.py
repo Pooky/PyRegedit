@@ -27,7 +27,7 @@ class Controller:
 
 		self.hivex = None
 		self.openHive("NTUSER.DAT_CHANGED")
-	
+
 		# Init handle for TreeView
 		self.treeView = self.frame.TreeView
 		self.initTreeView()
@@ -63,7 +63,11 @@ class Controller:
 		Kliknutí na sloupec
 	'''
 	def OnColClick(self, event):
-		event.Skip()
+		print "clicked"
+		#frame = EditFrame()
+		#frame.Show()
+		
+		
 	'''
 		Menu Bar
 	'''
@@ -192,8 +196,11 @@ class Controller:
 		#print "data: %i, name: %" % (data, name)
 		
 	def OnCollapseItem(self, event):
-			event.Skip()
-		
+		print "collapse"
+
+	'''
+		Click on item and write his key -> values
+	'''
 	def OnActivatedItem(self, event):
 
 		self.setStatusBarText("Item Activated")
@@ -207,10 +214,12 @@ class Controller:
 		rows = self.hivex.getValues(keyId)
 		
 		for i, val in enumerate(rows):
+			
 			index = self.lc.InsertStringItem(i, val[0])
 			self.lc.SetStringItem(index, 1, val[1])
 			self.lc.SetStringItem(index, 2, val[2])
-			
+
+			self.lc.SetItemData(index, keyId)
 		
 		
 

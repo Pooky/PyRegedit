@@ -22,10 +22,6 @@ class MainFrame(wx.Frame):
 		self.lc.InsertColumn(1, 'Type')
 		self.lc.InsertColumn(2, 'Value')
 
-		index = self.lc.InsertStringItem(2, "test")
-		self.lc.SetStringItem(index, 1, "test2")
-		self.lc.SetStringItem(index, 2, "test3")
-		
 		# status bar
 		self.sb = self.CreateStatusBar() 
 		
@@ -35,12 +31,12 @@ class MainFrame(wx.Frame):
 
 	def __set_properties(self):
 		# begin wxGlade: MyFrame2.__set_properties
-		self.SetTitle("PyRegEdit")
+		self.SetTitle("PyRegedit")
 		self.SetSize((800, 600))
 
 		self.lc.SetColumnWidth(0, 130)
 		self.lc.SetColumnWidth(1, 130)
-		self.lc.SetColumnWidth(2, 140)
+		self.lc.SetColumnWidth(2, 260)
 
 		#self.TreeView.SetSize((250, 400))
 		
@@ -55,3 +51,54 @@ class MainFrame(wx.Frame):
 		self.SetSizer(sizer_4)
 		self.Layout()
 		# end wxGlade
+'''
+	Editace zvoleného klíče
+'''
+class EditFrame(wx.Frame):
+	
+	def __init__(self):
+		# begin wxGlade: EditFrame.__init__
+		
+		wx.Frame.__init__(self, None)
+		
+		self.label_1 = wx.StaticText(self, wx.ID_ANY, "Key name:")
+		self.key_name = wx.TextCtrl(self, wx.ID_ANY, "")
+		self.key_value = wx.TextCtrl(self, wx.ID_ANY, "", style=wx.TE_MULTILINE)
+		self.btn_save = wx.Button(self, wx.ID_ANY, "Save")
+		self.btn_cancel = wx.Button(self, wx.ID_ANY, "Cancel")
+
+		self.key_value.SetValue(hex(2500))
+
+		self.Bind(wx.EVT_BUTTON, self.Close, self.btn_cancel)
+
+		self.__set_properties()
+		self.__do_layout()
+		# end wxGlade
+
+	def __set_properties(self):
+		# begin wxGlade: EditFrame.__set_properties
+		self.SetTitle("Editing...")
+		self.key_value.SetMinSize((400, 200))
+		# end wxGlade
+
+	def __do_layout(self):
+		# begin wxGlade: EditFrame.__do_layout
+		sizer_1 = wx.BoxSizer(wx.VERTICAL)
+		sizer_2 = wx.BoxSizer(wx.VERTICAL)
+		sizer_4 = wx.BoxSizer(wx.HORIZONTAL)
+		sizer_3 = wx.BoxSizer(wx.HORIZONTAL)
+		sizer_3.Add(self.label_1, 0, wx.TOP, 8)
+		sizer_3.Add(self.key_name, 1, wx.LEFT | wx.EXPAND, 15)
+		sizer_2.Add(sizer_3, 1, wx.BOTTOM | wx.EXPAND, 20)
+		sizer_2.Add(self.key_value, 0, 0, 0)
+		sizer_4.Add(self.btn_save, 0, 0, 0)
+		sizer_4.Add(self.btn_cancel, 0, 0, 0)
+		sizer_2.Add(sizer_4, 1, wx.TOP | wx.ALIGN_RIGHT, 20)
+		sizer_1.Add(sizer_2, 1, wx.ALL | wx.EXPAND, 50)
+		self.SetSizer(sizer_1)
+		sizer_1.Fit(self)
+		self.Layout()
+		# end wxGlade
+
+	def Close(self, event):
+		self.Destroy()
