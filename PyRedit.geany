@@ -22,7 +22,18 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=0
+current_page=7
+FILE_NAME_0=1778;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FFrame.py;0;4
+FILE_NAME_1=1800;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FModels%2FHivexManager.py;0;4
+FILE_NAME_2=365;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FModels%2FType.py;0;4
+FILE_NAME_3=182;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FMenuBar.py;0;4
+FILE_NAME_4=337;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FDialog.py;0;4
+FILE_NAME_5=440;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2Fhivex-test.py;0;4
+FILE_NAME_6=5177;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Ftools%2Fhivex%2Fhivex-1.3.7%2Fpython%2Fhivex.py;0;4
+FILE_NAME_7=219;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2Fapp2.py;0;4
+FILE_NAME_8=38;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2F__init__.py;0;4
+FILE_NAME_9=1504;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fglade%2Fedit_frame.py;0;4
+FILE_NAME_10=245;Markdown;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FREADME.md;0;4
 
 [VTE]
 last_dir=/home/worker/Bachelor/src
