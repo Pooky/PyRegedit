@@ -5,6 +5,17 @@ import hivex
 from Models import Type
 import struct
 
+def hextobin(hexval):
+	'''
+	Takes a string representation of hex data with
+	arbitrary length and converts to string representation
+	of binary.  Includes padding 0s
+	'''
+	thelen = len(hexval)*4
+	binval = bin(int(hexval, 16))[2:]
+	while ((len(binval)) < thelen):
+		binval = '0' + binval
+	return binval
 
 '''
 # Use hivex to pull out a registry key.
@@ -23,12 +34,12 @@ for child in children:
 	print values
 '''	
 	
-h = hivex.Hivex ("Data/NTUSER.DAT_CHANGED", write=True)
+h = hivex.Hivex ("Data/NTUSER.DAT_key_types", write=True)
 #h = hivex.Hivex ("DEFAULT")
 
 typ = Type()
 root = h.root ()
-key = h.node_get_child (root, "Environment")
+key = h.node_get_child (root, "Keys")
 
 #for child in h.node_children(root):
 	
@@ -36,23 +47,24 @@ key = h.node_get_child (root, "Environment")
 #print name
 '''
 	Test string
-'''
+
 value = "čeština"
 value = value.decode("utf-8").encode("utf-16le")
 
 value1 = { "key": "Key3", "t": Type.STRING, "value": value }
 h.node_set_value(key, value1)
-
+'''
 '''
 	Test int
-'''
+
 #value = 150
 value = struct.unpack("<h", "150")
 
 value1 = { "key": "Key3", "t": Type.INTEGER, "value": value }
 h.node_set_value(key, value1)
-
+'''
 for value in h.node_values(key):
+	
 	keyName =  h.value_key(value)
 	
 	#print h.node_name(value)
@@ -60,9 +72,19 @@ for value in h.node_values(key):
 	valType = h.value_type(val)[0]
 
 	#print valType
-	if(valType == Type.STRING):
+	if valType == Type.STRING:
 		value2 = h.value_string(val)
-		
+	elif valType == Type.INTEGER:
+		value2 = h.value_dword(val)
+	elif valType == Type.INTEGER_64:
+		value2 = h.value_dword(val)
+	elif valType == Type.SYS_STRING:
+		value2 = h.value_string(val)
+	elif valType == Type.LIST_STRING:
+		value2 = h.value_multiple_strings(val)
+	elif valType == Type.BINARY:
+		value2 = h.value_value(val)[1] # Result is in hexadecimal
+		value2 = ''.join(['%x' % ord(x) for x in value2])
 	else:
 		print typ.getStringType(valType)
 		value2 = h.value_value(val)[1]
@@ -74,13 +96,26 @@ for value in h.node_values(key):
 '''
 h.node_add_child (root, "D")
 b = h.node_get_child (root, "D")
+'''
+stringa = "test".decode('utf-8').encode('utf-16le')
+stringb = "test2".decode('utf-8').encode('utf-16le')
 
+x = 150
+integer = struct.pack('>BH', x >> 32, x & 0xFFFF)
+hexvalue = hextobin("A5")
 values = [
-    { "key": "Key1", "t": 3, "value": "ABC" },
-    { "key": "Key2", "t": 3, "value": "DEF" }
+    { "key": "TEST-Binary(string)", "t": Type.BINARY, "value": "ABC" },
+    { "key": "TEST-Binary(hex)", "t": Type.BINARY, "value": "test" },
+    { "key": "TEST-Dword", "t": Type.INTEGER, "value": '15'.decode('utf-8').encode('utf-16le')  },
+    { "key": "TEST-MultiString", "t": Type.LIST_STRING, "value": stringa + "\x00\x00" + stringb + "\x00\x00\x00\x00" },
 ]
-h.node_set_values (b, values)
+#h.node_set_values (key, values)
 
+value = 150
+value1 = { "key": "Key3", "t": Type.INTEGER, "value": "15" }
+h.node_set_value(key, value1)
+h.commit("KEYS_TESTING")
+'''
 value1 = { "key": "Key3", "t": 3, "value": "GHI" }
 h.node_set_value (b, value1)
 string = "JKL".decode('utf-8').encode('utf-16le')

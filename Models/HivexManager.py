@@ -65,7 +65,7 @@ class HivexManager:
 			val = self.h.node_get_value(node, keyName)
 			valType = self.h.value_type(val)[0]
 
-			value2 = self.getIntepretation(valType, val)
+			value2 = self.getStringIntepretation(valType, val)
 			stringType = typ.getStringType(valType)
 
 			res.append([keyName, stringType, value2])
@@ -108,8 +108,10 @@ class HivexManager:
 		val = self.h.node_get_value(node, keyName)
 		valType = self.h.value_type(val)[0]
 
+		editableValue = self.getStringIntepretation(valType, val, True)
+			
 		#print valType, val
-		return [self.getIntepretation(valType, val), valType]
+		return [editableValue, valType]
 		
 	def setValue(self, node, value):
 
@@ -132,33 +134,61 @@ class HivexManager:
 		return self.h.close()
 
 	'''
-		Display format value -> string
+		Display format value -> readable string
 	'''
-	def getIntepretation(self, val_type, val):
+	def getStringIntepretation(self, val_type, val, edit = False):
 
 		if val_type == Type.STRING:
-			res = self.h.value_string(val)
-		elif val_type == Type.SYS_STRING:
-			res = self.h.value_string(val)
-		elif val_type == Type.BINARY:
-			string = self.h.value_value(val)[1]
-			#print repr(string)
-			#print type(string)
-			print "binary"
-			res = repr(string)
-			#res = hex(string,2)
+			result = str(self.h.value_string(val))
 		elif val_type == Type.INTEGER:
-			res = self.h.value_value(val)[1].decode('utf-16le').encode('utf-8')
-		elif val_type == Type.INTEGER_BIG_ENDIAN:
-			res = self.h.value_value(val)[1].decode('utf-16be').encode('utf-8')
-		elif val_type == Type.LINK:
-			res = self.h.value_string(val)
+			result = str(self.h.value_dword(val))
+		elif val_type == Type.INTEGER_64:
+			result = str(self.h.value_dword(val))
+		elif val_type == Type.SYS_STRING:
+			result = str(self.h.value_string(val))
 		elif val_type == Type.LIST_STRING:
-			res = self.h.value_multiple_strings(val)
+			
+			result = self.h.value_multiple_strings(val)
+			if not edit:
+				result = str(result)
+			else:
+				result = '\n'.join(result)
+			
+		elif val_type == Type.BINARY:
+			result = self.h.value_value(val)[1] # Result is in hexadecimal
+			if not edit:
+				result = '0x' + ''.join(['%x' % ord(x) for x in result]) # překodování
+			else:
+				result = ''.join(['%x' % ord(x) for x in result]) # překodování
 		else:
-			res = self.h.value_value(val)[1]
+			#print typ.getStringType(val_type)
+			result = self.h.value_value(val)[1]
+			result = result.decode('utf-16le').encode('utf-8')
 		
-		return str(res)
+		return result
+	'''
+		Interpreatce v realnem formatu pro python
+	'''
+	def getRealIntepretation(self, val_type, val):
+
+		if val_type == Type.STRING:
+			result = str(self.h.value_string(val))
+		elif val_type == Type.INTEGER:
+			result = int(self.h.value_dword(val))
+		elif val_type == Type.INTEGER_64:
+			result = int(self.h.value_dword(val))
+		elif val_type == Type.SYS_STRING:
+			result = str(self.h.value_string(val))
+		elif val_type == Type.LIST_STRING:
+			result = self.h.value_multiple_strings(val)
+		elif val_type == Type.BINARY:
+			result = self.h.value_value(val)[1] # Result is in hexadecimal
+			#result = ' '.join(['%x' % ord(x) for x in result]) # překodování
+		else:
+			#print typ.getStringType(val_type)
+			result = self.h.value_value(val)[1]
+		
+		return result
 
 	'''
 		Return format for save string -> value

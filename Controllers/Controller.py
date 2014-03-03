@@ -376,7 +376,7 @@ class Controller:
 		self.ef.Bind(wx.EVT_BUTTON, self.OnCancelClick, self.ef.btn_cancel)
 
 		self.ef.key_name.SetValue(keyName)
-		self.ef.key_value.SetValue(keyValue)
+		self.ef.key_value.SetValue(str(keyValue))
 
 		self.ef.Show()
 

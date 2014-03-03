@@ -47,11 +47,11 @@ class Type:
 		elif x == self.LINK:
 			res = "REG_LINK"
 		elif x == self.LIST_STRING:
-			res = "LIST_STRING"
+			res = "REG_MULTI_SZ"
 		else:
 			res = "Unknow"
 
 		return res
 
 		 
-	
+
