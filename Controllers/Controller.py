@@ -6,6 +6,8 @@ import sys
 import os
 import wx
 
+
+
 sys.path.append(os.path.abspath("../Models"))
 sys.path.append(os.path.abspath("../Views"))
 
@@ -31,7 +33,10 @@ class Controller:
 		self.editing = False
 		self.ef = None
 		self.firstSave = True
-		self.openHive("NTUSER.DAT_CHANGED")
+		self.saved = False
+		
+		self.openHive("Data/NTUSER.DAT_key_types")
+		self.full_path = os.path.abspath("Data/NTUSER.DAT_key_types")
 
 		# Init handle for TreeView
 		self.treeView = self.frame.TreeView
@@ -197,6 +202,9 @@ class Controller:
 		node = item.GetData() # parent node of this key
 		keyName = item.GetText() # name of key
 
+		if not keyName:
+			return False
+
 		self.hivex.deleteKey(int(node), keyName)
 		self.reloadKeyView(node)
 
@@ -208,16 +216,22 @@ class Controller:
 		Close hive and delete items in tree View
 	'''
 	def menuClose(self, event):
-		self.treeView.DeleteAllItems()
-		self.hivex = None
+
+		if not self.saved:
+
+			dlg = wx.MessageDialog(None, 'Your work is not saved!', 'Are you sure?', wx.YES_NO | wx.NO_DEFAULT | wx.ICON_QUESTION)
+			if dlg.ShowModal() == wx.ID_YES:
+				self.treeView.DeleteAllItems()
+				self.hivex = None
+			
 	'''
 		Save changes to hive
 		- and create backup copy...
 	'''
-	def menuSave(self, event):
+	def menuSave(self, event):	
 			
 		if self.firstSave == True:
-			shutil.copyfile(self.full_path, self.full_path + ".backup" )
+			shutil.copyfile(self.full_path, self.full_path + ".backup" ) # create file backup
 			self.firstSave = False
 			
 		self.hivex.saveChanges(self.full_path)
@@ -372,5 +386,7 @@ class Controller:
 			self.frame.SetTitle(self.title + " - SAVED")
 		else:
 			self.frame.SetTitle(self.title + " - Modified *")
+
+		self.saved = saved
 			
 

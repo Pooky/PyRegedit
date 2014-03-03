@@ -59,7 +59,7 @@ class EditFrame(wx.Frame):
 	def __init__(self):
 		# begin wxGlade: EditFrame.__init__
 		
-		wx.Frame.__init__(self, None)
+		wx.Frame.__init__(self, None,  style=wx.MINIMIZE_BOX|wx.SYSTEM_MENU|wx.CAPTION|wx.CLIP_CHILDREN)
 			
 		self.label_1 = wx.StaticText(self, wx.ID_ANY, "Key name:")
 		self.key_name = wx.TextCtrl(self, wx.ID_ANY, "")
@@ -69,7 +69,6 @@ class EditFrame(wx.Frame):
 		self.rtype = wx.ComboBox(self, wx.ID_ANY, choices=[], style=wx.CB_DROPDOWN)
 
 		self.key_name.Enable(False)
-		self.key_value.SetValue(hex(2500))
 
 		self.__set_properties()
 		self.__do_layout()

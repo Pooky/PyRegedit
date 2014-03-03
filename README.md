@@ -14,11 +14,16 @@ Supported operations
 * Remove node from node tree
 * Edit registry key value
 * Add new registry key value
+* Deleting single key
 
 Requirements
 ----------------
 * hivex 1.3.7
 * wxPython
+
+Screenshot
+------------------
+![alt Screenshot](screenshot.png)
 
 
 Resources & Links

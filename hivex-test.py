@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 # -*- coding: UTF-8 -*-
+
 import hivex
-
-
+from Models import Type
+import struct
 
 
 '''
@@ -22,34 +23,53 @@ for child in children:
 	print values
 '''	
 	
-h = hivex.Hivex ("NTUSER.DAT_CHANGED")
+h = hivex.Hivex ("Data/NTUSER.DAT_CHANGED", write=True)
 #h = hivex.Hivex ("DEFAULT")
 
+typ = Type()
 root = h.root ()
+key = h.node_get_child (root, "Environment")
 
-
-#key = h.node_get_child (key, "Software")
-
-for child in h.node_children(root):
+#for child in h.node_children(root):
 	
-	name = h.node_name(child);
-	print name
+#name = h.node_name(child);
+#print name
+'''
+	Test string
+'''
+value = "čeština"
+value = value.decode("utf-8").encode("utf-16le")
+
+value1 = { "key": "Key3", "t": Type.STRING, "value": value }
+h.node_set_value(key, value1)
+
+'''
+	Test int
+'''
+#value = 150
+value = struct.unpack("<h", "150")
+
+value1 = { "key": "Key3", "t": Type.INTEGER, "value": value }
+h.node_set_value(key, value1)
+
+for value in h.node_values(key):
+	keyName =  h.value_key(value)
 	
-	for value in h.node_values(child):
-		keyName =  h.value_key(value)
+	#print h.node_name(value)
+	val = h.node_get_value(key, keyName)
+	valType = h.value_type(val)[0]
+
+	#print valType
+	if(valType == Type.STRING):
+		value2 = h.value_string(val)
 		
-		#print h.node_name(value)
-		val = h.node_get_value(child, keyName)
-		valType = h.value_type(val)[0]
+	else:
+		print typ.getStringType(valType)
+		value2 = h.value_value(val)[1]
+		value2 = value2.decode('utf-16le').encode('utf-8')
 
-		print valType
-		if(valType == 66):
-			value2 = h.value_string(val)
-		else:
-			value2 = h.value_value(val)[1]
-			value2 = value2.decode('utf-16le').encode('utf-8')
 
-		print "\t %s --> %s" % (keyName, value2)
+	print "\t %s --> %s" % (keyName, value2)
 
 '''
 h.node_add_child (root, "D")

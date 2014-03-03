@@ -16,24 +16,39 @@ indent_mode=2
 name=PyRedit
 base_path=/home/worker/Bachelor/src
 description=
+file_patterns=
 
 [long line marker]
 long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=7
-FILE_NAME_0=1778;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FFrame.py;0;4
-FILE_NAME_1=1800;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FModels%2FHivexManager.py;0;4
-FILE_NAME_2=365;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FModels%2FType.py;0;4
-FILE_NAME_3=182;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FMenuBar.py;0;4
-FILE_NAME_4=337;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FDialog.py;0;4
-FILE_NAME_5=440;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2Fhivex-test.py;0;4
-FILE_NAME_6=5177;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Ftools%2Fhivex%2Fhivex-1.3.7%2Fpython%2Fhivex.py;0;4
-FILE_NAME_7=219;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2Fapp2.py;0;4
-FILE_NAME_8=38;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2F__init__.py;0;4
-FILE_NAME_9=1504;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fglade%2Fedit_frame.py;0;4
-FILE_NAME_10=245;Markdown;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FREADME.md;0;4
+current_page=1
+FILE_NAME_0=1328;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FFrame.py;0;4
+FILE_NAME_1=2986;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FModels%2FHivexManager.py;0;4
+FILE_NAME_2=182;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FMenuBar.py;0;4
+FILE_NAME_3=337;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FDialog.py;0;4
+FILE_NAME_4=1006;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2Fhivex-test.py;0;4
+FILE_NAME_5=5177;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Ftools%2Fhivex%2Fhivex-1.3.7%2Fpython%2Fhivex.py;0;4
+FILE_NAME_6=141;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2Fapp2.py;0;4
+FILE_NAME_7=20;Markdown;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FREADME.md;0;4
+FILE_NAME_8=661;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FControllers%2FController.py;0;4
+FILE_NAME_9=81;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FModels%2FType.py;0;4
+FILE_NAME_10=19022;C;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Ftools%2Fhivex%2Fhivex-1.3.7%2Fpython%2Fhivex-py.c;0;4
+FILE_NAME_11=5454;C;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Ftools%2Fhivex%2Fhivex-1.3.7%2Flib%2Fhivex.h;0;4
+FILE_NAME_12=77465;C;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Ftools%2Fhivex%2Fhivex-1.3.7%2Flib%2Fhivex.c;0;4
 
 [VTE]
-last_dir=/home/worker/Bachelor/src
+last_dir=/home/worker/Bachelor/src/Models
+
+[build-menu]
+EX_00_LB=_Spustit
+EX_00_CM=python "%f"
+EX_00_WD=
+EX_01_LB=Run App
+EX_01_CM=python app2.py
+EX_01_WD=/home/worker/Bachelor/src/
+PythonFT_01_LB=Runn App
+PythonFT_01_CM=
+PythonFT_01_WD=
+filetypes=Python;

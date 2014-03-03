@@ -3,6 +3,7 @@
 
 import hivex
 import hashlib
+import binascii
 from Type import Type
 
 '''
@@ -112,6 +113,7 @@ class HivexManager:
 		
 	def setValue(self, node, value):
 
+		print value
 		return self.h.node_set_value(node, value)
 		
 	def addChild(self, key, new_node):
@@ -139,17 +141,22 @@ class HivexManager:
 		elif val_type == Type.SYS_STRING:
 			res = self.h.value_string(val)
 		elif val_type == Type.BINARY:
-			res = hex(self.h.value_value(val)[1])
+			string = self.h.value_value(val)[1]
+			#print repr(string)
+			#print type(string)
+			print "binary"
+			res = repr(string)
+			#res = hex(string,2)
 		elif val_type == Type.INTEGER:
-			res = self.h.value_dword(val)
+			res = self.h.value_value(val)[1].decode('utf-16le').encode('utf-8')
 		elif val_type == Type.INTEGER_BIG_ENDIAN:
-			res = self.h.value_value(val)[1].decode('utf-16be').encode('utf-8') # no nevím
+			res = self.h.value_value(val)[1].decode('utf-16be').encode('utf-8')
 		elif val_type == Type.LINK:
 			res = self.h.value_string(val)
 		elif val_type == Type.LIST_STRING:
 			res = self.h.value_multiple_strings(val)
 		else:
-			res = self.h.value_value(val)[1].decode('utf-16be').encode('utf-8') # no nevím
+			res = self.h.value_value(val)[1]
 		
 		return str(res)
 
@@ -158,9 +165,28 @@ class HivexManager:
 	'''
 	def getIntepretationBack(self, val_type, val):
 
-		if val_type == Type.STRING:
-			res = val.encode('utf-16le')
+		if val_type == Type.BINARY:
+			res = self.hextobin(val)
+		elif val_type == Type.INTEGER_BIG_ENDIAN:
+			res = long(val)
+		elif val_type == Type.INTEGER:
+			res = long(val)
 		else:
-			res = val
+			res = val.decode("utf-8").encode("utf-16le")
+
+		print res
 		
 		return res
+
+	def hextobin(self, hexval):
+		'''
+		Takes a string representation of hex data with
+		arbitrary length and converts to string representation
+		of binary.  Includes padding 0s
+		author: hbdgaf
+		'''
+		thelen = len(hexval)*4
+		binval = bin(int(hexval, 16))[2:]
+		while ((len(binval)) < thelen):
+			binval = '0' + binval
+		return binval
