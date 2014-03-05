@@ -100,21 +100,21 @@ b = h.node_get_child (root, "D")
 stringa = "test".decode('utf-8').encode('utf-16le')
 stringb = "test2".decode('utf-8').encode('utf-16le')
 
-x = 150
-integer = struct.pack('>BH', x >> 32, x & 0xFFFF)
-hexvalue = hextobin("A5")
 values = [
-    { "key": "TEST-Binary(string)", "t": Type.BINARY, "value": "ABC" },
-    { "key": "TEST-Binary(hex)", "t": Type.BINARY, "value": "test" },
-    { "key": "TEST-Dword", "t": Type.INTEGER, "value": '15'.decode('utf-8').encode('utf-16le')  },
-    { "key": "TEST-MultiString", "t": Type.LIST_STRING, "value": stringa + "\x00\x00" + stringb + "\x00\x00\x00\x00" },
+    { "key": "TEST_Binary(ABC)", "t": Type.BINARY, "value": "ABC" },
+    { "key": "TEST_Binary(A5)", "t": Type.BINARY, "value": "A5" },
+    { "key": "TEST_NONE(00001)", "t": Type.NONE, "value": "00001" },
+    { "key": "TEST_DWORD(15)", "t": Type.INTEGER, "value": '15'  },
+    { "key": "TEST_MULTISTRING", "t": Type.LIST_STRING, "value": stringa + "\x00\x00" + stringb + "\x00\x00\x00\x00" },
 ]
-#h.node_set_values (key, values)
+h.node_set_values (key, values)
 
-value = 150
-value1 = { "key": "Key3", "t": Type.INTEGER, "value": "15" }
+value1 = { "key": "TEST_DWORD2(15)", "t": Type.INTEGER, "value": "150" }
+value2 = { "key": "TEST_BINARY(hex)", "t": Type.BINARY, "value": "C5" }
 h.node_set_value(key, value1)
+h.node_set_value(key, value2)
 h.commit("KEYS_TESTING")
+
 '''
 value1 = { "key": "Key3", "t": 3, "value": "GHI" }
 h.node_set_value (b, value1)

@@ -12,6 +12,9 @@ class MenuBar(wx.MenuBar):
 
 	ID_ADD_KEY = 156
 	ID_REMOVE_KEY = 160
+
+	ID_ABOUT = 200
+	ID_FAQ = 201
 	
 	
 	def __init__(self, *args, **kwds):
@@ -40,9 +43,8 @@ class MenuBar(wx.MenuBar):
 		
 		self.About = wx.Menu()
 		self.Append(self.About, "About")
-
-		self.FaQ = wx.Menu()
-		self.Append(self.FaQ, "FaQ")
+		self.About.Append(self.ID_ABOUT, "About", "", wx.ITEM_NORMAL)
+		self.About.Append(self.ID_FAQ, "FaQ", "", wx.ITEM_NORMAL)
 
 		self.__set_properties()
 		self.__do_layout()

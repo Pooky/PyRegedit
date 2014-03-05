@@ -23,15 +23,17 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=3
-FILE_NAME_0=9338;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FControllers%2FController.py;0;4
-FILE_NAME_1=1151;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2Fhivex-test.py;0;4
+current_page=6
+FILE_NAME_0=1529;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FControllers%2FController.py;0;4
+FILE_NAME_1=2829;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2Fhivex-test.py;0;4
 FILE_NAME_2=416;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FModels%2FType.py;0;4
-FILE_NAME_3=2233;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FModels%2FHivexManager.py;0;4
-FILE_NAME_4=4635;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Ftools%2Fhivex%2Fhivex-1.3.7%2Fpython%2Fhivex.py;0;4
+FILE_NAME_3=4635;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Ftools%2Fhivex%2Fhivex-1.3.7%2Fpython%2Fhivex.py;0;4
+FILE_NAME_4=4486;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FModels%2FHivexManager.py;0;4
+FILE_NAME_5=0;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2Fhivex-test2.py;0;4
+FILE_NAME_6=0;None;0;EUTF-8;1;1;0;%2Fvar%2Fwww%2Fbill%2FAslan.json;0;4
 
 [VTE]
-last_dir=/home/worker/Bachelor/src/Models
+last_dir=/var/www/bill
 
 [build-menu]
 EX_00_LB=_Spustit

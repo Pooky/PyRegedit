@@ -4,6 +4,7 @@
 import hivex
 import hashlib
 import binascii
+import struct
 from Type import Type
 
 '''
@@ -164,8 +165,33 @@ class HivexManager:
 			#print typ.getStringType(val_type)
 			result = self.h.value_value(val)[1]
 			result = result.decode('utf-16le').encode('utf-8')
-		
+			
 		return result
+	'''
+		Return format for save string -> value
+	'''
+	def getIntepretationBack(self, val_type, val):
+
+		val = val.strip() # remove whitelisten
+		if val_type == Type.BINARY:
+			res = self.hextobin(val)
+		elif val_type == Type.INTEGER_BIG_ENDIAN:
+			res = struct.pack(">I", int(val))
+		elif val_type == Type.INTEGER:
+			res = struct.pack("<I", int(val))
+		elif val_type == Type.LIST_STRING:
+
+			res = ""
+			for x in val.split('\n'):
+				res += x.decode('utf-8').encode('utf-16le')
+				res += "\x00\x00"
+			res += "\x00\x00"
+			
+		else:
+			res = val.decode("utf-8").encode("utf-16le")
+
+		return res
+		
 	'''
 		Interpreatce v realnem formatu pro python
 	'''
@@ -189,24 +215,6 @@ class HivexManager:
 			result = self.h.value_value(val)[1]
 		
 		return result
-
-	'''
-		Return format for save string -> value
-	'''
-	def getIntepretationBack(self, val_type, val):
-
-		if val_type == Type.BINARY:
-			res = self.hextobin(val)
-		elif val_type == Type.INTEGER_BIG_ENDIAN:
-			res = long(val)
-		elif val_type == Type.INTEGER:
-			res = long(val)
-		else:
-			res = val.decode("utf-8").encode("utf-16le")
-
-		print res
-		
-		return res
 
 	def hextobin(self, hexval):
 		'''

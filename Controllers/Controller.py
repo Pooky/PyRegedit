@@ -7,7 +7,6 @@ import os
 import wx
 
 
-
 sys.path.append(os.path.abspath("../Models"))
 sys.path.append(os.path.abspath("../Views"))
 
@@ -99,10 +98,15 @@ class Controller:
 
 		value = {}
 		new_value = self.ef.key_value.GetValue()
+
 		
 		# reconvert
 		value["key"] = self.ef.key_name.GetValue()
 		value["t"] = [i for i, x in enumerate(Type.TYPES) if x == self.ef.rtype.GetValue()][0]
+
+		if not self.checkValueType(value["t"], new_value):
+			return False
+		
 		value["value"] = self.hivex.getIntepretationBack(value["t"], new_value)
 		
 		#print "saving", value
@@ -139,6 +143,8 @@ class Controller:
 		self.frame.Bind(wx.EVT_MENU, self.menuDeleteNode, id=self.menuBar.ID_DELETE_NODE)
 		self.frame.Bind(wx.EVT_MENU, self.menuAddKey, id=self.menuBar.ID_ADD_KEY)
 		self.frame.Bind(wx.EVT_MENU, self.menuRemoveKey, id=self.menuBar.ID_REMOVE_KEY)
+		self.frame.Bind(wx.EVT_MENU, self.menuAbout, id=self.menuBar.ID_ABOUT)
+		self.frame.Bind(wx.EVT_MENU, self.menuFaq, id=self.menuBar.ID_FAQ)
 
 	def menuOpen(self, event):
 
@@ -157,6 +163,12 @@ class Controller:
 			self.reloadTreeView()
 
 		dlg.Destroy()
+
+	def menuAbout(self, event):
+		AboutDialog()
+
+	def menuFaq(self, event):
+		wx.LaunchDefaultBrowser("http://seznam.cz")
 	'''
 		Reload tree view of nodes
 	'''
@@ -380,6 +392,30 @@ class Controller:
 
 		self.ef.Show()
 
+	def checkValueType(self, val_type, value):
+
+		value = value.strip()
+		if val_type == Type.BINARY:
+			'''try:
+				int(value, 16)
+			except Exception:
+				self.throwErrorDialog("This is not valid hexadecimal value")
+				return False'''
+			return True
+			
+		elif val_type == Type.INTEGER_BIG_ENDIAN or val_type == Type.INTEGER:
+			try:
+				int(value)
+			except Exception:
+				self.throwErrorDialog("This is not valid INT value")
+				return False
+
+		return True
+
+	def throwErrorDialog(self, message):
+		wx.MessageBox(message, 'Error', wx.OK | wx.ICON_ERROR)
+		
+	
 	def isSaved(self, saved):
 
 		if saved == True:
