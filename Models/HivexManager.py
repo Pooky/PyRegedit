@@ -120,6 +120,9 @@ class HivexManager:
 		return self.h.node_set_value(node, value)
 		
 	def addChild(self, key, new_node):
+
+		if(key == 0):
+			key = self.h.root() # jsme v rootu
 		
 		return self.h.node_add_child(key, new_node)
 
@@ -142,9 +145,16 @@ class HivexManager:
 		if val_type == Type.STRING:
 			result = str(self.h.value_string(val))
 		elif val_type == Type.INTEGER:
-			result = str(self.h.value_dword(val))
+			try:
+				result = str(self.h.value_dword(val))
+			except Exception:
+				result = "** NOT-VALID **"
+			
 		elif val_type == Type.INTEGER_64:
-			result = str(self.h.value_dword(val))
+			try:
+				result = str(self.h.value_dword(val))
+			except Exception:
+				result = "** NOT-VALID **"			
 		elif val_type == Type.SYS_STRING:
 			result = str(self.h.value_string(val))
 		elif val_type == Type.LIST_STRING:
@@ -173,7 +183,7 @@ class HivexManager:
 	def getIntepretationBack(self, val_type, val):
 
 		val = val.strip() # remove whitelisten
-		if val_type == Type.BINARY:
+		if val_type == Type.BINARY or val_type == Type.NONE:
 			res = self.hextobin(val)
 		elif val_type == Type.INTEGER_BIG_ENDIAN:
 			res = struct.pack(">I", int(val))
@@ -216,15 +226,15 @@ class HivexManager:
 		
 		return result
 
-	def hextobin(self, hexval):
+	def tobin(self, value):
 		'''
-		Takes a string representation of hex data with
-		arbitrary length and converts to string representation
-		of binary.  Includes padding 0s
-		author: hbdgaf
+			Function check is value is hex or string
+			then it convert to bin
 		'''
-		thelen = len(hexval)*4
-		binval = bin(int(hexval, 16))[2:]
-		while ((len(binval)) < thelen):
-			binval = '0' + binval
-		return binval
+		try:
+			res = int(value, 16)
+			res = res.decode('hex')
+		except Exception:
+			res = value # its a string
+
+		return res

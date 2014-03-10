@@ -12,7 +12,7 @@ class Type:
 	'''
 	INTEGER = 4 # REG_DWORD
 	'''
-		alias 32 bit, little endian integer
+		Integer with big endian
 	'''
 	INTEGER_BIG_ENDIAN = 5 # REG_DWORD_BIG_ENDIAN
 	'''

@@ -235,6 +235,7 @@ class Controller:
 			if dlg.ShowModal() == wx.ID_YES:
 				self.treeView.DeleteAllItems()
 				self.hivex = None
+				self.lc.DeleteAllItems()
 			
 	'''
 		Save changes to hive
@@ -296,6 +297,7 @@ class Controller:
 		self.treeView.Bind(wx.EVT_TREE_ITEM_EXPANDING, self.OnExpandItem)
 		#self.treeView.Bind(wx.EVT_TREE_ITEM_COLLAPSING, self.OnCollapseItem)	
 		self.treeView.Bind(wx.EVT_TREE_ITEM_ACTIVATED, self.OnActivatedItem)
+		self.treeView.Bind(wx.EVT_LEFT_UP, self.OnActivatedItem) 
 
 		self.reloadTreeView()
 	
@@ -345,9 +347,9 @@ class Controller:
 	'''
 	def OnActivatedItem(self, event):
 
-		item = event.GetItem()
-		if not item.IsOk():
-			item = self.treeView.GetSelection()
+		#item = event.GetItem()
+		#if not item.IsOk():
+		item = self.treeView.GetSelection()
 		
 		keyId = self.treeView.GetItemData(item).GetData()[0]
 		if not keyId:

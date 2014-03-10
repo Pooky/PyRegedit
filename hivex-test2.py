@@ -41,7 +41,7 @@ def transform(val_type, val):
 
 	val = val.strip() # remove whitespace
 	if val_type == Type.BINARY:
-		res = self.hextobin(val)
+		res = hextobin(val)
 	elif val_type == Type.INTEGER_BIG_ENDIAN:
 		res = struct.pack(">I", int(val))
 	elif val_type == Type.INTEGER:
@@ -53,24 +53,22 @@ def transform(val_type, val):
 			res += x.decode('utf-8').encode('utf-16le')
 			res += "\x00\x00"
 		res += "\x00\x00"
-		
+	elif val_type == Type.NONE:
+		res = val
 	else:
 		res = val.decode("utf-8").encode("utf-16le")
 
 	return res
 	
-def hextobin(self, hexval):
-	'''
-	Takes a string representation of hex data with
-	arbitrary length and converts to string representation
-	of binary.  Includes padding 0s
-	author: hbdgaf
-	'''
-	thelen = len(hexval)*4
-	binval = bin(int(hexval, 16))[2:]
-	while ((len(binval)) < thelen):
-		binval = '0' + binval
-	return binval
+def hextobin(value):
+
+	try:
+		res = int(value, 16)
+		res = res.decode('hex')
+	except Exception:
+		res = value # its a string
+
+	return res
 
 h = hivex.Hivex ("NTUSER.DAT", write=True)
 
@@ -78,9 +76,9 @@ root = h.root ()
 node = h.node_get_child (root, "Keys")
 
 values = [
-    { "key": "TEST_BINARY(ABC)", "t": Type.BINARY, "value": "ABC" }, # How transform this to save it as Binary value?
-    { "key": "TEST_BINARY(A5)", "t": Type.BINARY, "value": "a5" }, # How transform this to save it as Binary value?
-    { "key": "TEST_NONE(00001)", "t": Type.NONE, "value":  transform(Type.NONE, "00001")},
+    { "key": "TEST_BINARY(ABC)", "t": Type.BINARY, "value": transform(Type.BINARY,"ABC") }, # How transform this to save it as Binary value?
+    { "key": "TEST_BINARY(A5C5)", "t": Type.BINARY, "value": transform(Type.BINARY, "a5c5") }, # How transform this to save it as Binary value?
+    #{ "key": "TEST_NONE(00001)", "t": Type.NONE, "value":  transform(Type.NONE, "00001")},
     { "key": "TEST_DWORD(15)", "t": Type.INTEGER, "value":  transform(Type.INTEGER, "15")},
     { "key": "TEST_MULTISTRING", "t": Type.LIST_STRING, "value": transform(Type.LIST_STRING, "IT\nIS\nGOOD")},
 ]
