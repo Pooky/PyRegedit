@@ -34,8 +34,8 @@ class Controller:
 		self.firstSave = True
 		self.saved = False
 		
-		self.openHive("Data/NTUSER.DAT_key_types")
-		self.full_path = os.path.abspath("Data/NTUSER.DAT_key_types")
+		#self.openHive("Data/NTUSER.DAT_key_types")
+		#self.full_path = os.path.abspath("Data/NTUSER.DAT_key_types")
 
 		# Init handle for TreeView
 		self.treeView = self.frame.TreeView
@@ -144,7 +144,6 @@ class Controller:
 		self.frame.Bind(wx.EVT_MENU, self.menuAddKey, id=self.menuBar.ID_ADD_KEY)
 		self.frame.Bind(wx.EVT_MENU, self.menuRemoveKey, id=self.menuBar.ID_REMOVE_KEY)
 		self.frame.Bind(wx.EVT_MENU, self.menuAbout, id=self.menuBar.ID_ABOUT)
-		self.frame.Bind(wx.EVT_MENU, self.menuFaq, id=self.menuBar.ID_FAQ)
 
 	def menuOpen(self, event):
 
@@ -167,8 +166,6 @@ class Controller:
 	def menuAbout(self, event):
 		AboutDialog()
 
-	def menuFaq(self, event):
-		wx.LaunchDefaultBrowser("http://seznam.cz")
 	'''
 		Reload tree view of nodes
 	'''

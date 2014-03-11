@@ -1,5 +1,8 @@
 # -*- coding: UTF-8 -*-
+
 import wx
+import os
+
 
 class AddNodeDialog(wx.Dialog):
 
@@ -48,7 +51,7 @@ class AboutDialog():
 				
 		info = wx.AboutDialogInfo()
 
-		info.SetIcon(wx.Icon('registry-icon.png', wx.BITMAP_TYPE_PNG))
+		info.SetIcon(wx.Icon(os.path.abspath('registry-icon.png'), wx.BITMAP_TYPE_PNG))
 		info.SetName('PyRegedit')
 		info.SetLicence(self.license)
 		info.SetDescription(self.description)

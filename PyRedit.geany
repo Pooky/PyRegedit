@@ -23,10 +23,9 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=2
-FILE_NAME_0=73;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fpacking%2FPyRegedit%2Fsetup.py;0;4
-FILE_NAME_1=289;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FControllers%2FController.py;0;4
-FILE_NAME_2=0;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FFrame.py;0;4
+current_page=1
+FILE_NAME_0=289;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FControllers%2FController.py;0;4
+FILE_NAME_1=0;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FFrame.py;0;4
 
 [VTE]
 last_dir=/home/worker/Bachelor/src/Views
@@ -36,9 +35,12 @@ EX_00_LB=_Spustit
 EX_00_CM=python "%f"
 EX_00_WD=
 EX_01_LB=Run App
-EX_01_CM=python app2.py
+EX_01_CM=python pyregedit.py
 EX_01_WD=/home/worker/Bachelor/src/
 PythonFT_01_LB=Runn App
 PythonFT_01_CM=
 PythonFT_01_WD=
 filetypes=Python;
+PythonFT_00_LB=_Přeložit
+PythonFT_00_CM=python -m py_compile "%f"
+PythonFT_00_WD=
