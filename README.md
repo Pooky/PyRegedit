@@ -14,6 +14,26 @@ without using any Microsoft proprietary API.
 * Add new registry key value
 * Deleting single key
 
+## Installation
+
+### Install package
+
+* download debian package - pyregedit_1.0-1.deb
+* install it by `dpkg -i pyregedit_1.0-1.deb`
+* after install run `pyregedit`
+
+### Install from source
+
+* clone content of this repository
+* run it by `python pyregedit.py`
+
+## Testing
+
+| Name | Description          |
+| ------------- | ----------- |
+| Help      | Display the help window.|
+| Close     | Closes a window     |
+
 ## FAQ
 
 ### Is changes directly saved to hive?
@@ -47,13 +67,14 @@ own solution.
 
 * hivex 1.3.7
 * wxPython
-* python 2.*
+* python 2.7
 
 ## Screenshot
 ![alt Screenshot](screenshot.png)
 
 
 ## Resources & Links
+
 * http://gitweb.samba.org/?p=samba.git;a=tree;f=source/lib/registry;h=21934b5f658009ff0383f6aed41b102013b5b046;hb=v4-0-stable.
 * http://sentinelchicken.com/research/registry_format/
 * http://www.beginningtoseethelight.org/ntsecurity/index.php+
