@@ -1,14 +1,14 @@
 # PyRegedit
 
 ##### Table of Contents  
-[Description](#description)  
-[Supported operations](#operations)  
-[Test results](#testing)
-[Installation](#install) 
-[Requirements](#requirements)
-[FAQ](#faq) 
-[Screenshots](#screenshots)  
-[Resources & Links](resources_links)  
+* [Description](#description)  
+* [Supported operations](#operations)  
+* [Test results](#testing)  
+* [Installation](#install)  
+* [Requirements](#requirements)  
+* [FAQ](#faq) 
+* [Screenshots](#screenshots)  
+* [Resources & Links](resources_links)  
 
 <a name="description"/>
 ## Description
