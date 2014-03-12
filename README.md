@@ -29,10 +29,10 @@ without using any Microsoft proprietary API.
 
 ## Testing
 
-| Name | Description          |
-| ------------- | ----------- |
-| Help      | Display the help window.|
-| Close     | Closes a window     |
+| Operation | Windows XP | Windows 7 Professional | Windows 8.1 |
+| ------------- | ----------- | ------------- | ----------- |
+| Create 3 top keys by Regedit32 and read them by PyRegedit. | Yes | Yes | Yes | Yes |
+| Create 3 subkeys by Regedit32 and read them by PyRegedit.	 | Yes | Yes | Yes | Yes |
 
 ## FAQ
 
