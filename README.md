@@ -8,7 +8,7 @@
 * [Requirements](#requirements)  
 * [FAQ](#faq) 
 * [Screenshots](#screenshots)  
-* [Resources & Links](resources_links)  
+* [Resources & Links](#resources_links)  
 
 <a name="description"/>
 ## Description
