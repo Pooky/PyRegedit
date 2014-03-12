@@ -30,9 +30,12 @@ without using any Microsoft proprietary API.
 ## Testing
 
 | Operation | Windows XP | Windows 7 Professional | Windows 8.1 |
-| ------------- | ----------- | ------------- | ----------- |
+| ------------- |:-----------:|:-------------:|:-----------:|
 | Create 3 top keys by Regedit32 and read them by PyRegedit. | Yes | Yes | Yes | Yes |
 | Create 3 subkeys by Regedit32 and read them by PyRegedit.	 | Yes | Yes | Yes | Yes |
+| Create 2 new values in key  – REG_SZ, REG_DWORD and read them by PyRegedit. | Yes | Yes | Yes | Yes |
+| Change 2 values by PyRegedit and read them by Regedit32. | Yes | Yes | Yes | Yes |
+| Remove one key from hive by PyRegedit and check result in Regedit32 | Yes | Yes | Yes | Yes |
 
 ## FAQ
 
