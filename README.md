@@ -75,7 +75,7 @@ of this tests is prove that data is safely saved and Windows can read them corre
 
 No. All changes which you made on current hive are not saved until you
 manually saved it. Also, after first save is made a backup copy - which
-should help, when something happend with original file.
+should help, when something happened with original file.
 
 ### How is performed changes of hive?
 
@@ -85,13 +85,13 @@ any hive.
 
 ### Is there any limitations?
 
-Yes, this editor is only interface for cumunication with library hivex. If
+Yes, this editor is only interface for communication with library hivex. If
 hivex doesn't support any type of operation it's not possible to do that. For
 more please see this - http://libguestfs.org/hivex.3.html
 
 ### Why I should use this and not hivex directly?
 
-This editor should only make esier access to hive for users, which are not
+This editor should only make easier access to hive for users, which are not
 so technical advanced to use hivex directly from command line or program their
 own solution.
 
@@ -113,3 +113,8 @@ own solution.
 * http://sentinelchicken.com/research/registry_format/
 * http://www.beginningtoseethelight.org/ntsecurity/index.php+
 * http://libguestfs.org/hivex.3.html
+
+
+## Author
+
+martin.klima ~[at]~ aol.com
