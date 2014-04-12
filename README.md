@@ -89,6 +89,8 @@ Yes, this editor is only interface for communication with library hivex. If
 hivex doesn't support any type of operation it's not possible to do that. For
 more please see this - http://libguestfs.org/hivex.3.html
 
+
+
 ### Why I should use this and not hivex directly?
 
 This editor should only make easier access to hive for users, which are not
@@ -114,7 +116,13 @@ own solution.
 * http://www.beginningtoseethelight.org/ntsecurity/index.php+
 * http://libguestfs.org/hivex.3.html
 
+<<<<<<< HEAD
+## Author
+
+Martin Klíma <martin.klima@aol.com>
+=======
 
 ## Author
 
 martin.klima ~[at]~ aol.com
+>>>>>>> 6cb93302114c19f5b960a6d7a265f0d8ae7da568
