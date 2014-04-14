@@ -33,13 +33,21 @@ without using any Microsoft proprietary API.
 ### Install package
 
 * download debian package - pyregedit_1.0-1.deb
-* install it by `dpkg -i pyregedit_1.0-1.deb`
+* install gdebi - 'sudo apt-get install gdebi'
+* install package and dependencies `sudo gdebi pyregedit_1.0-1.deb`
 * after install run `pyregedit`
 
 ### Install from source
 
 * clone content of this repository
 * run it by `python pyregedit.py`
+
+<a name="requirements"/>
+## Requirements
+
+* libhivex 1.3.6
+* wxPython
+* python 2.7
 
 <a name="testing"/>
 ## Testing
@@ -97,13 +105,6 @@ This editor should only make easier access to hive for users, which are not
 so technical advanced to use hivex directly from command line or program their
 own solution.
 
-<a name="requirements"/>
-## Requirements
-
-* hivex 1.3.7
-* wxPython
-* python 2.7
-
 <a name="screenshots"/>
 ## Screenshots
 ![alt Screenshot](screenshot.png)
@@ -116,13 +117,6 @@ own solution.
 * http://www.beginningtoseethelight.org/ntsecurity/index.php+
 * http://libguestfs.org/hivex.3.html
 
-<<<<<<< HEAD
 ## Author
 
 Martin Klíma <martin.klima@aol.com>
-=======
-
-## Author
-
-martin.klima ~[at]~ aol.com
->>>>>>> 6cb93302114c19f5b960a6d7a265f0d8ae7da568
