@@ -33,13 +33,14 @@ without using any Microsoft proprietary API.
 ### Install package
 
 * download debian package - pyregedit_1.0-1.deb
-* install gdebi - 'sudo apt-get install gdebi'
+* install gdebi - `sudo apt-get install gdebi`
 * install package and dependencies `sudo gdebi pyregedit_1.0-1.deb`
 * after install run `pyregedit`
 
 ### Install from source
 
 * clone content of this repository
+* install dependencies - `sudo apt-get install python2.7 python-wxgtk2.8 python-hivex`
 * run it by `python pyregedit.py`
 
 <a name="requirements"/>
