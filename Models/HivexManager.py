@@ -116,7 +116,7 @@ class HivexManager:
 		
 	def setValue(self, node, value):
 
-		print value
+		#print value
 		return self.h.node_set_value(node, value)
 		
 	def addChild(self, key, new_node):

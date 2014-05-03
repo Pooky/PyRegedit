@@ -99,4 +99,70 @@ class EditFrame(wx.Frame):
 		sizer_1.Fit(self)
 		self.Layout()
 		# end wxGlade
+'''
+	Setup formulář
+'''
+class SetupFrame(wx.Frame):
+	
+    def __init__(self):
+        # begin wxGlade: Setup.__init__
+        wx.Frame.__init__(self, None, style=wx.DEFAULT_DIALOG_STYLE)
+        self.textHeadline = wx.StaticText(self, wx.ID_ANY, "Setup for PyRegedit", style=wx.ALIGN_CENTRE)
+        self.textStatus = wx.StaticText(self, wx.ID_ANY, "", style=wx.ALIGN_CENTRE)
+        self.textDescription = wx.StaticText(self, wx.ID_ANY, 
+        """
+        This dialog should help you with selection Windows Registry 
+        hive. In this first step, please select directory where are installed 
+        Windows and press 'RELOAD' button. \n
+        Example: '/mnt/disk/Windows'\n 
+        After that, PyRegedit will try to find Windows Hive at default 
+        location. If it find something, it will show output in frame bottom. After that 
+        you can click on hive and open it directly in PyRegedit.
+		""")
+        self.inputFile = wx.TextCtrl(self, wx.ID_ANY, "")
+        self.buttonFileSelect = wx.Button(self, wx.ID_ANY, "Location")
+        self.buttonReload = wx.Button(self, wx.ID_ANY, "Reload")
+        self.lc = wx.ListCtrl(self, wx.ID_ANY, style=wx.LC_REPORT | wx.LC_AUTOARRANGE)
+        
+        self.lc.InsertColumn(0, 'Path to hive')
+        self.lc.InsertColumn(1, 'Logical Key')
+        
+        self.lc.SetColumnWidth(0, 400)
+        self.lc.SetColumnWidth(1, 400)
+
+        self.__set_properties()
+        self.__do_layout()
+        # end wxGlade
+
+    def __set_properties(self):
+        # begin wxGlade: Setup.__set_properties
+        self.SetTitle("Setup PyRegedit")
+        self.SetSize((800, 600))
+        self.textHeadline.SetMinSize((400, 40))
+        self.textHeadline.SetBackgroundColour(wx.Colour(242, 241, 240))
+        self.textHeadline.SetFont(wx.Font(25, wx.ROMAN, wx.NORMAL, wx.BOLD, 0, ""))
+        self.textDescription.SetFont(wx.Font(14, wx.DEFAULT, wx.NORMAL, wx.NORMAL, 0, ""))
+        self.textStatus.SetForegroundColour(wx.Colour(255, 0, 0))
+        self.inputFile.SetMinSize((200, 35))
+        self.buttonFileSelect.SetMinSize((85, 35))
+        self.buttonReload.SetMinSize((85, 35))
+        # end wxGlade
+
+    def __do_layout(self):
+        # begin wxGlade: Setup.__do_layout
+        sizer_1 = wx.BoxSizer(wx.VERTICAL)
+        sizer_2 = wx.BoxSizer(wx.HORIZONTAL)
+        sizer_1.Add(self.textHeadline, 0, wx.ALL | 
+        wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 10)
+        sizer_1.Add(self.textDescription, 0, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | wx.ALIGN_CENTER_VERTICAL, 10)
+        sizer_2.Add(self.inputFile, 0, 0, 0)
+        sizer_2.Add(self.buttonFileSelect, 0, 0, 0)
+        sizer_2.Add(self.buttonReload, 0, 0, 0)
+        sizer_2.Add(self.textStatus, 0, wx.ALL , 4)
+        sizer_1.Add(sizer_2, 1, wx.ALL | wx.ALIGN_CENTER_HORIZONTAL | 
+        wx.ALIGN_CENTER_VERTICAL, 10)
+        sizer_1.Add(self.lc, 1, wx.EXPAND, 0)
+        self.SetSizer(sizer_1)
+        self.Layout()
+        # end wxGlade
 

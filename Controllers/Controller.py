@@ -22,7 +22,15 @@ class Controller:
 		self.app = wx.PySimpleApp(0)
 		self.frame = MainFrame(None, wx.ID_ANY, "")
 		self.app.SetTopWindow(self.frame)
-
+		
+		self.sf = SetupFrame()
+		self.sf.Show()
+		
+		self.sf.Bind(wx.EVT_BUTTON, self.OnFileButtonClick, self.sf.buttonFileSelect)
+		self.sf.Bind(wx.EVT_BUTTON, self.reloadSetupView, self.sf.buttonReload)
+		self.sf.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnSetupListClick, self.sf.lc)
+		self.sf.Bind(wx.EVT_CLOSE, self.OnCloseSetup)
+		
 		# Init menu bar
 		self.menuBar = MenuBar()
 		self.frame.SetMenuBar(self.menuBar)
@@ -45,7 +53,7 @@ class Controller:
 		self.lc = self.frame.lc
 		self.frame.Bind(wx.EVT_LIST_ITEM_ACTIVATED, self.OnClick, self.lc)
 
-		self.frame.Show()
+		#self.frame.Show()
 		self.app.MainLoop()
 
 	def setStatusBarText(self, text):
@@ -65,6 +73,23 @@ class Controller:
 		self.setStatusBarText("Hive opened: " + path)
 
 		self.firstSave = True
+	'''
+		Kliknutí na list v Setupu
+	'''
+	def OnSetupListClick(self, event):
+	
+		item = event.GetItem()
+		path_to_hive = item.GetText() # name of key
+		
+		self.openHive(path_to_hive)
+		self.reloadTreeView()
+		self.frame.Show()
+		self.sf.Close()
+		
+	def OnCloseSetup(self, event):
+
+		self.sf.Destroy()
+		self.frame.Show()
 		
 	'''
 		Click on selected key -> value
@@ -146,7 +171,6 @@ class Controller:
 		self.frame.Bind(wx.EVT_MENU, self.menuAbout, id=self.menuBar.ID_ABOUT)
 
 	def menuOpen(self, event):
-
 		
 		self.dirname = ""
 			
@@ -162,6 +186,66 @@ class Controller:
 			self.reloadTreeView()
 
 		dlg.Destroy()
+	'''
+		Otevření dialogu pro výběr složky v setupu
+	'''
+	def OnFileButtonClick(self, event):
+		
+		dlg = wx.DirDialog(self.sf, "Select a folder")
+		
+		if dlg.ShowModal() == wx.ID_OK:
+			
+			path = dlg.GetPath();
+			# Uložíme lokaci do inputu
+			self.sf.inputFile.SetValue(path)
+
+		dlg.Destroy()		
+	
+	'''
+		Reload a načtení soubor při setupu
+	'''
+	def reloadSetupView(self, event):
+		
+		path = self.sf.inputFile.GetValue()
+		fullRegistryPath = os.path.join(path, "System32/config")
+		
+		if(not os.path.isdir(fullRegistryPath)):
+			print "not directory" + fullRegistryPath
+			self.sf.textStatus.SetLabel("Not valid directory")
+			return False
+		
+		self.sf.lc.DeleteAllItems()
+		
+		files = {
+			"system": "HKEY_LOCAL_MACHINE\SYSTEM ", 
+			"sam": "HKEY_LOCAL_MACHINE\SAM", 
+			"security": "HKEY_LOCAL_MACHINE\SECURITY",
+			"software": "HKEY_LOCAL_MACHINE\SOFTWARE",
+			"default": "HKEY_USERS.DEFAULT"
+		}
+		i = 0
+		# Prolezeme složku a najdeme hive files
+		for key, value in files.iteritems():
+			
+			found = False
+			print fullRegistryPath + "/" + key
+			
+			if os.path.isfile(fullRegistryPath + "/" + key):
+				print "Nalezen klic " + value
+				found = True
+			
+			
+			data = "not found"
+			if found:
+				data = fullRegistryPath + "/" + key
+				
+			index = self.sf.lc.InsertStringItem(i, data)	
+			self.sf.lc.SetStringItem(index, 1,  value)
+			i = i + 1
+			
+		print "done"
+		
+
 
 	def menuAbout(self, event):
 		AboutDialog()
@@ -241,7 +325,7 @@ class Controller:
 	def menuSave(self, event):	
 			
 		if self.firstSave == True:
-			shutil.copyfile(self.full_path, self.full_path + ".backup" ) # create file backup
+			#shutil.copyfile(self.full_path, self.full_path + ".backup" ) # create file backup
 			self.firstSave = False
 			
 		self.hivex.saveChanges(self.full_path)
@@ -349,10 +433,13 @@ class Controller:
 		item = self.treeView.GetSelection()
 		
 		keyId = self.treeView.GetItemData(item).GetData()[0]
-		if not keyId:
-			keyId = self.hivex.getRoot()
-
-		self.reloadKeyView(keyId)
+		
+		if self.hivex:
+		
+			if not keyId:
+				keyId = self.hivex.getRoot()
+	
+			self.reloadKeyView(keyId)
 			
 	'''
 		Reload view of values

@@ -23,9 +23,16 @@ long_line_behaviour=1
 long_line_column=72
 
 [files]
-current_page=1
-FILE_NAME_0=289;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FControllers%2FController.py;0;4
-FILE_NAME_1=0;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FFrame.py;0;4
+current_page=7
+FILE_NAME_0=155;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2F__init__.py;0;4
+FILE_NAME_1=3202;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FFrame.py;0;4
+FILE_NAME_2=0;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FMenuBar.py;0;4
+FILE_NAME_3=58;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FViews%2FSetup.py;0;4
+FILE_NAME_4=864;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fglade%2Fsetup.py;0;4
+FILE_NAME_5=98;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fpacking%2Fpyregedit_1.0-1%2Fusr%2Flib%2Fpython2.7%2Fpyregedit%2Fpyregedit.py;0;4
+FILE_NAME_6=2361;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FModels%2FHivexManager.py;0;4
+FILE_NAME_7=467;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2FControllers%2FController.py;0;4
+FILE_NAME_8=21;Python;0;EUTF-8;1;1;0;%2Fhome%2Fworker%2FBachelor%2Fsrc%2Fpyregedit.py;0;4
 
 [VTE]
 last_dir=/home/worker/Bachelor/src/Views
@@ -34,9 +41,9 @@ last_dir=/home/worker/Bachelor/src/Views
 EX_00_LB=_Spustit
 EX_00_CM=python "%f"
 EX_00_WD=
-EX_01_LB=Run App
+EX_01_LB=PyRegedit
 EX_01_CM=python pyregedit.py
-EX_01_WD=/home/worker/Bachelor/src/
+EX_01_WD=/home/worker/Bachelor/src
 PythonFT_01_LB=Runn App
 PythonFT_01_CM=
 PythonFT_01_WD=

@@ -7,5 +7,12 @@ import sys
 
 from Controllers import Controller
 
-controller = Controller()
-controller.initApp() # Init app
+def main():
+	controller = Controller()
+	controller.initApp() # Init app
+
+if __name__ == "__main__":
+    main()
+
+
+
