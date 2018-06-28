@@ -97,6 +97,7 @@ of this tests is prove that data is safely saved and Windows can read them corre
 | Remove one key from hive by Regedit32 and check result in PyRegedit | Yes | Yes | Yes | Yes |
 
 <a name="faq">
+  
 FAQ
 ========
 
