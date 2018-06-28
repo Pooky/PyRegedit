@@ -12,6 +12,7 @@
 * [Resources & Links](#resources_links)  
 
 <a name="description"/>
+
 Description
 =====================
 
@@ -20,11 +21,13 @@ This project aim to allow users to access their data from Linux platform,
 without using any Microsoft proprietary API.
 
 <a name="screenshots"/>
+
 Screenshots
 ==================
 ![alt Screenshot](screenshot.png)
 
 <a name="operations"/>
+
 Supported operations
 =======================
 
@@ -37,6 +40,7 @@ Supported operations
 * Deleting single key
 
 <a name="install"/>
+
 Installation
 ===================
 
@@ -55,6 +59,7 @@ Installation
 * run it by `python pyregedit.py`
 
 <a name="requirements"/>
+
 Requirements
 ================
 
@@ -63,6 +68,7 @@ Requirements
 * python 2.7
 
 <a name="testing"/>
+
 Testing
 =================
 
@@ -112,17 +118,14 @@ Yes, this editor is only interface for communication with library hivex. If
 hivex doesn't support any type of operation it's not possible to do that. For
 more please see this - http://libguestfs.org/hivex.3.html
 
-
-
 ### Why I should use this and not hivex directly?
 
 This editor should only make easier access to hive for users, which are not
 so technical advanced to use hivex directly from command line or program their
 own solution.
 
-
-
 <a name="resources_links"/>
+
 Resources & Links
 ===================
 
@@ -133,5 +136,4 @@ Resources & Links
 
 Author
 ============
-
 Martin Klíma <martin.klima@aol.com>
