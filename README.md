@@ -12,14 +12,21 @@
 * [Resources & Links](#resources_links)  
 
 <a name="description"/>
-# Description
+Description
+=====================
 
 Project for GUI editor of Windows Registry hives.
 This project aim to allow users to access their data from Linux platform,
 without using any Microsoft proprietary API.
 
+<a name="screenshots"/>
+Screenshots
+==================
+![alt Screenshot](screenshot.png)
+
 <a name="operations"/>
-# Supported operations
+Supported operations
+=======================
 
 * Show directory structure like tree view
 * Show list of keys -> values foreach node
@@ -30,7 +37,8 @@ without using any Microsoft proprietary API.
 * Deleting single key
 
 <a name="install"/>
-# Installation
+Installation
+===================
 
 ### Install package
 
@@ -47,14 +55,16 @@ without using any Microsoft proprietary API.
 * run it by `python pyregedit.py`
 
 <a name="requirements"/>
-# Requirements
+Requirements
+================
 
 * libhivex 1.3.6
 * wxPython
 * python 2.7
 
 <a name="testing"/>
-# Testing
+Testing
+=================
 
 There is results of various tests, that should cover basic operation. Purpouse
 of this tests is prove that data is safely saved and Windows can read them correctly.
@@ -81,7 +91,8 @@ of this tests is prove that data is safely saved and Windows can read them corre
 | Remove one key from hive by Regedit32 and check result in PyRegedit | Yes | Yes | Yes | Yes |
 
 <a name="faq">
-# FAQ
+FAQ
+========
 
 ### Is changes directly saved to hive?
 
@@ -109,18 +120,18 @@ This editor should only make easier access to hive for users, which are not
 so technical advanced to use hivex directly from command line or program their
 own solution.
 
-<a name="screenshots"/>
-# Screenshots
-![alt Screenshot](screenshot.png)
+
 
 <a name="resources_links"/>
-## Resources & Links
+Resources & Links
+===================
 
 * http://gitweb.samba.org/?p=samba.git;a=tree;f=source/lib/registry;h=21934b5f658009ff0383f6aed41b102013b5b046;hb=v4-0-stable.
 * http://sentinelchicken.com/research/registry_format/
 * http://www.beginningtoseethelight.org/ntsecurity/index.php+
 * http://libguestfs.org/hivex.3.html
 
-## Author
+Author
+============
 
 Martin Klíma <martin.klima@aol.com>
