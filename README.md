@@ -137,4 +137,4 @@ Resources & Links
 
 Author
 ============
-Martin Klíma <martin.klima@aol.com>
+Martin Klíma <martin.klima@hotmail.cz>
